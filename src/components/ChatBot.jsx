@@ -46,7 +46,7 @@ const ChatBot = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch(`${BACKEND_URL}/api/chat`, {
+            const response = await fetch(`${BACKEND_URL}/api/scrape/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,6 @@ const ChatBot = () => {
                 },
                 body: JSON.stringify({
                     message: inputMessage,
-                    websiteUrl: WEBSITE_URL,
                 }),
             });
 
@@ -62,7 +61,7 @@ const ChatBot = () => {
 
             const botMessage = {
                 type: 'bot',
-                text: data.response || 'Sorry, I couldn\'t process that request.',
+                text: data.data?.response || data.response || 'Sorry, I couldn\'t process that request.',
                 timestamp: new Date(),
             };
 
