@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
+import ChatBot from './components/ChatBot';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
@@ -28,6 +29,7 @@ const Layout = ({ children }) => {
       </main>
       <Footer />
       <CookieConsent />
+      <ChatBot />
     </div>
   );
 };
