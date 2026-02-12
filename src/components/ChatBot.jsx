@@ -59,6 +59,21 @@ const ChatBot = () => {
 
             const data = await response.json();
 
+            // Check if request was successful
+            if (!response.ok || !data.success) {
+                const errorText = data.message || data.error || `Server error (${response.status})`;
+                const errorMessage = {
+                    type: 'bot',
+                    text: `❌ ${errorText}\n\n${response.status === 500
+                            ? 'This might mean the website hasn\'t been scraped yet. Please visit the ChatFlow AI dashboard to scrape https://free-mail.netlify.app/ first.'
+                            : 'Please try again or contact support.'
+                        }`,
+                    timestamp: new Date(),
+                };
+                setMessages((prev) => [...prev, errorMessage]);
+                return;
+            }
+
             const botMessage = {
                 type: 'bot',
                 text: data.data?.response || data.response || 'Sorry, I couldn\'t process that request.',
@@ -70,7 +85,7 @@ const ChatBot = () => {
             console.error('Chat error:', error);
             const errorMessage = {
                 type: 'bot',
-                text: 'Sorry, I\'m having trouble connecting. Please try again later.',
+                text: 'Sorry, I\'m having trouble connecting to the server. Please check your internet connection and try again.',
                 timestamp: new Date(),
             };
             setMessages((prev) => [...prev, errorMessage]);
